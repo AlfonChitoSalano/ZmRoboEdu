@@ -47,11 +47,34 @@ class ColorController:
 
             rcu.SetWaitForTime(0.5)
 
+    @staticmethod
+    def display_photo_electric_values_in_screen():
+        base_color_value = 800
+
+        while True:
+            display = str(rcu.GetLightSensor(1)) + " " + str(rcu.GetLightSensor(2)) + " " + str(
+                rcu.GetLightSensor(3)) + " " + str(rcu.GetLightSensor(4)) + " " + str(
+                rcu.GetLightSensor(5)) + " " + str(rcu.GetLightSensor(6)) + " " + str(
+                rcu.GetLightSensor(7))
+            rcu.SetDisplayString(1, display, ColorController._displayTextYellowColor,
+                                 ColorController._screenBackgroundBlackColor)
+
+            if rcu.GetLightSensor(1) > base_color_value:
+                rcu.SetDisplayString(20, "lighter color is detected", ColorController._displayTextYellowColor,
+                                     ColorController._screenBackgroundBlackColor)
+            else:
+                rcu.SetDisplayString(20, " darker color is detected", ColorController._displayTextYellowColor,
+                                     ColorController._screenBackgroundBlackColor)
+
+            rcu.SetWaitForTime(0.5)
+
 
 # entry point
 def main():
     # MotorController.set_motor_straight(50)
+    # just select between the two both are working
     ColorController.display_color_in_screen()
+    # ColorController.display_photo_electric_values_in_screen()
 
 
 main()
